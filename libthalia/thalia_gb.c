@@ -41,7 +41,7 @@ static void thalia_gb_finalize (GObject *obj)
 	}
 
 	g_free(gb->mmu);
-	gdk_pixbuf_unref(gb->gpu.screen);
+	g_object_unref(gb->gpu.screen);
 
 	// Pass on finalization to the parent class.
 	G_OBJECT_CLASS(thalia_gb_parent_class)->finalize(obj);
@@ -181,7 +181,9 @@ void thalia_gb_load_rom(ThaliaGB* gb, const gchar* path, GError** error)
 		return;
 	}
 
-	g_io_channel_close(channel);
+	g_io_channel_shutdown(channel, TRUE, error);
+	if(*error)
+		return;
 	g_io_channel_unref(channel);
 	return;
 }
