@@ -6,10 +6,10 @@
 
 // Jump conditions. Assigned values correspond with opcode encoding.
 typedef enum {
-	THALIA_COND_NZ = 0,
-	THALIA_COND_Z  = 1,
-	THALIA_COND_NC = 2,
-	THALIA_COND_C  = 3
+    THALIA_COND_NZ = 0,
+    THALIA_COND_Z  = 1,
+    THALIA_COND_NC = 2,
+    THALIA_COND_C  = 3
 } thalia_cond_t;
 
 // Conditions

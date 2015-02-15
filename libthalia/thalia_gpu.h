@@ -18,29 +18,29 @@
 
 // Sprite, corresponds with the memory layout in object attribute memory (OAM).
 typedef struct {
-	guint8 ypos;
-	guint8 xpos;
-	guint8 tileno;
-	guint8 padding : 4;
-	gboolean palette : 1;
-	gboolean xflip : 1;
-	gboolean yflip : 1;
-	gboolean priority : 1;
+    guint8 ypos;
+    guint8 xpos;
+    guint8 tileno;
+    guint8 padding : 4;
+    gboolean palette : 1;
+    gboolean xflip : 1;
+    gboolean yflip : 1;
+    gboolean priority : 1;
 } thalia_sprite_t;
 
 // GPU modes, correspond with the lower two bits of the LCD status register.
 typedef enum {
-	THALIA_GPU_MODE_HBLANK = 0,
-	THALIA_GPU_MODE_VBLANK = 1,
-	THALIA_GPU_MODE_SCAN_OAM = 2,
-	THALIA_GPU_MODE_SCAN_VRAM = 3
+    THALIA_GPU_MODE_HBLANK = 0,
+    THALIA_GPU_MODE_VBLANK = 1,
+    THALIA_GPU_MODE_SCAN_OAM = 2,
+    THALIA_GPU_MODE_SCAN_VRAM = 3
 } thalia_gpu_mode_t;
 
 typedef struct {
-	guint32 done;      // Cycles the GPU has processed.
-	GdkPixbuf* screen; // Pixel buffer to draw the screen on.
-	gint64 last_change;
-	gint64 periods;
+    guint32 done;      // Cycles the GPU has processed.
+    GdkPixbuf* screen; // Pixel buffer to draw the screen on.
+    gint64 last_change;
+    gint64 periods;
 } thalia_gpu_t;
 #endif
 
