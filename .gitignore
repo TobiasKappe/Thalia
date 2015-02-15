@@ -6,3 +6,6 @@ doc
 *.a
 libthalia.a
 thalia
+*.swp
+*.swo
+*.swn
