@@ -179,7 +179,6 @@ int main(int argc, char *argv[])
 {
 	GError* error = NULL;
 
-	g_type_init();
 	gtk_init(&argc, &argv);
 
 	if(argc < 2) {
@@ -208,11 +207,10 @@ int main(int argc, char *argv[])
 	gtk_widget_show_all(window);
 
 	// Initialize the GLib and GDK threading systems.
-	g_thread_init(NULL);
 	gdk_threads_init();
 
 	// Spawn a background thread to do execution in, so we don't block the GUI.
-	g_thread_create(thalia_gui_bg_thread, NULL, FALSE, &error);
+	g_thread_try_new("emulation", thalia_gui_bg_thread, NULL, &error);
 	if(error)
 		thalia_gui_fatal_error("Could not spawn background thread", error);
 
