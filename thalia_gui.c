@@ -38,14 +38,14 @@ static gint thalia_gui_render_pixbuf(gpointer data)
     gdk_window_end_paint(screen->window);
 
     // Tell the emulation thread that screen rendering is safe again.
-    thalia_gpu_unlock();
+    thalia_gpu_unlock(gb);
     return 0;
 }
 
 static void thalia_gui_render_screen()
 {
     // Make sure rendering happens on the GTK thread.
-    thalia_gpu_lock();
+    thalia_gpu_lock(gb);
     gtk_idle_add(thalia_gui_render_pixbuf, NULL);
 }
 
@@ -67,7 +67,7 @@ static void thalia_gui_make_menu_bar(GtkWidget* container)
 
 static void thalia_gui_update_key(guint16 keyval, gboolean value)
 {
-    thalia_keypad_lock();
+    thalia_keypad_lock(gb);
 
     // TODO: Maintain these separately with regard to double presses.
     switch(keyval) {
@@ -104,7 +104,7 @@ static void thalia_gui_update_key(guint16 keyval, gboolean value)
         gb->keypad.key_select = value;
         break;
     }
-    thalia_keypad_unlock();
+    thalia_keypad_unlock(gb);
 }
 
 static void thalia_gui_key_pressed(GtkWidget* widget, GdkEventKey* event)

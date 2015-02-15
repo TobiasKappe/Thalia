@@ -18,7 +18,11 @@ GQuark thalia_error_quark()
 // Creates a new ThaliaGB instance.
 ThaliaGB* thalia_gb_new()
 {
-    return THALIA_GB(g_object_new(THALIA_TYPE_GB, NULL));
+    ThaliaGB* gb = THALIA_GB(g_object_new(THALIA_TYPE_GB, NULL));
+    g_mutex_init(&gb->gpu.mutex);
+    g_mutex_init(&gb->keypad.mutex);
+
+    return gb;
 }
 
 // Destroys ThaliaGB instance in 'gb'.

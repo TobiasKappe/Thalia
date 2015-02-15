@@ -33,12 +33,13 @@ typedef struct {
     gboolean key_up;
     gboolean key_down;
     thalia_key_region_t region;
+    GMutex mutex;
 } thalia_keypad_t;
 #endif
 
 #ifdef __THALIA_GB_T__
-void thalia_keypad_lock();
-void thalia_keypad_unlock();
+void thalia_keypad_lock(ThaliaGB* gb);
+void thalia_keypad_unlock(ThaliaGB* gb);
 guint8 thalia_keypad_read(ThaliaGB* gb);
 void thalia_keypad_write(ThaliaGB* gb, guint8 value);
 void thalia_keypad_event(ThaliaGB* gb, gboolean pressed);

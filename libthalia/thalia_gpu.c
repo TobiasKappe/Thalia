@@ -5,19 +5,16 @@
 #include "thalia_gpu.h"
 #include "thalia_mmu.h"
 
-// TODO: Implement this using a mutex in a non-broken glib
-G_LOCK_DEFINE(thalia_gpu);
-
 // Locks the GPU.
-void thalia_gpu_lock()
+void thalia_gpu_lock(ThaliaGB* gb)
 {
-    G_LOCK(thalia_gpu);
+    g_mutex_lock(&gb->gpu.mutex);
 }
 
 // Unlocks the GPU.
-void thalia_gpu_unlock()
+void thalia_gpu_unlock(ThaliaGB* gb)
 {
-    G_UNLOCK(thalia_gpu);
+    g_mutex_unlock(&gb->gpu.mutex);
 }
 
 // Handles a DMA (direct memory access) request.
@@ -310,9 +307,9 @@ static void thalia_gpu_vblank(ThaliaGB* gb)
             // Note that we can only continue once the consuming code
             // relinquishes its lock. This is done to prevent the emulation
             // thread from continuing to render, causing screen tearing.
-            thalia_gpu_unlock();
+            thalia_gpu_unlock(gb);
             g_signal_emit_by_name(G_OBJECT(gb), "thalia-render-screen");
-            thalia_gpu_lock();
+            thalia_gpu_lock(gb);
         } else
             gb->gpu.periods++;
     }

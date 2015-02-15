@@ -41,12 +41,13 @@ typedef struct {
     GdkPixbuf* screen; // Pixel buffer to draw the screen on.
     gint64 last_change;
     gint64 periods;
+    GMutex mutex;
 } thalia_gpu_t;
 #endif
 
 #ifdef __THALIA_GB_T__
-void thalia_gpu_lock();
-void thalia_gpu_unlock();
+void thalia_gpu_lock(ThaliaGB* gb);
+void thalia_gpu_unlock(ThaliaGB* gb);
 void thalia_gpu_mark_change(ThaliaGB* gb);
 void thalia_gpu_step(ThaliaGB* gb);
 void thalia_gpu_handle_dma(ThaliaGB* gb, guint8 addr_msb);
